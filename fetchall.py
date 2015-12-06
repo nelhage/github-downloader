@@ -25,7 +25,7 @@ def write_repo(repo):
         if out is not None:
             out.close()
         out = open('repos/repos.' + str(base/CHUNK) + '.json', 'a')
-    out.write(json.dumps(repo))
+    out.write(json.dumps(repo) + "\n")
 
 while True:
     print "GET %s" % (u,)
