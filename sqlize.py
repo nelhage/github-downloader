@@ -12,7 +12,7 @@ m.metadata.create_all(engine)
 conn = engine.connect()
 
 for path in sys.argv[1:]:
-    print "reading %s..." % (path,)
+    print("reading %s..." % (path,))
     if path.endswith('.gz'):
         f = gzip.GzipFile(path, 'r')
     else:
@@ -21,7 +21,7 @@ for path in sys.argv[1:]:
     for line in f:
         repo = json.loads(line)
         if repo['owner'] is None:
-            print "no owner id=%r" % (repo['id'],)
+            print("no owner id=%r" % (repo['id'],))
             continue
         try:
             buf.append(dict(
@@ -34,7 +34,7 @@ for path in sys.argv[1:]:
         except TypeError as te:
             import traceback
             traceback.print_exc()
-            print "line=%r repo=%r" % (line, repo)
+            print("line=%r repo=%r" % (line, repo))
             raise
         if len(buf) >= 100:
             insert = m.repos.insert().prefix_with('OR REPLACE')

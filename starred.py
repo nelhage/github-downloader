@@ -20,20 +20,20 @@ m.metadata.create_all(engine)
 conn = engine.connect()
 
 while True:
-    print "GET %s" % (u,)
+    print("GET %s" % (u,))
     r = s.get(u, headers=auth_headers)
     if r.status_code != 200:
         if r.status_code == 403:
             delay = int(r.headers['x-ratelimit-reset']) - time.time()
             if delay > 0:
-                print "ratelimited, sleeping %fs until %s..." % (delay, datetime.datetime.utcfromtimestamp(int(r.headers['x-ratelimit-reset'])))
+                print("ratelimited, sleeping %fs until %s..." % (delay, datetime.datetime.utcfromtimestamp(int(r.headers['x-ratelimit-reset']))))
                 time.sleep(delay + 1)
         elif r.status_code >= 500:
-            print "server error: %s" % (r.content,)
+            print("server error: %s" % (r.content,))
             time.sleep(10)
         else:
-            print "unknown error: %s" % (repr(r),)
-            print r.text
+            print("unknown error: %s" % (repr(r),))
+            print(r.text)
         continue
     buf = []
     for repo in r.json()['items']:
